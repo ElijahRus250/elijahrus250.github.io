@@ -1,8 +1,6 @@
 section {
-
-    background-image: linear-gradient(to bottom right, red, yellow);
-  }
-
+  background-color: #ff6600;
+}
 
 body {
   font-style: normal;
