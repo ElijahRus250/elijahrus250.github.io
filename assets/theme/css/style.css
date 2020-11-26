@@ -1,5 +1,6 @@
 section {
-  background-color: #ff6600;
+    background-image: linear-gradient(to bottom right, red, yellow);
+  
 }
 
 body {
