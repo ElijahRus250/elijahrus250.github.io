@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ElijahRus | Games | Pong</title>
+<meta name="description" content="Pong, did you know pong was the first ever game made? One person gets the up and down keys while the other gets the W and S keys. Try and play with your friends!" />
+<meta name="theme-color" content="#ffc800" />
+<meta name="description" content="Pong, did you know pong was the first ever game made? One person gets the up and down keys while the other gets the W and S keys. Try and play with your friends!">
+<meta name="keywords" content="ElijahRus, ElijahRus, ElijahRus.xyz, Elijah T, Elijah, retro, games, online game, old school, first game, pong, pong online">
+<meta name="msapplication-TileColor" content="#ffc800" />
+  <meta charset="UTF-8">
+  <style>
+    
+    html, body {
+    height: 100%;
+    margin: 0;
+      }
+    body {
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+      }
+    canvas {
+    border: 1px solid black;
+      }
+    
+      html,body{
+        background-color: #fff;
+        font-family: 'Source Sans Pro',sans-serif;
+        overflow-x: hidden !important;
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+    
+    *{
+        text-decoration: none !important;
+    }
+    
+    .footer{
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.footerlinks a{
+    margin: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+.footerlinks .mainlink{
+    color: #e0501b;
+}
+
+      
+    .nav{
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 80px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 25px 0 25px;
+        background-color: #fff;
+        box-shadow: 0 19px 38px rgba(0,0,0,0.10);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    .nav .links a{
+        margin-right: 25px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+    }
+    
+    .nav .links .mainlink{
+        color: #e0501b;
+    }
+    
+    .nav h4{
+        font-size: 22px;
+        font-weight: bold;
+        margin-left: 25px;
+    }
+    
+    </style>
+    
+</head>
+<body>
+  <div class="wrapper">
+      <div class="nav">
+          <div class="logo">
+              <h4>ElijahRus</h4>
+          </div>
+          <div class="links">
+              <a href="https://elijahrus.xyz/">Home</a>
+              <a href="https://elijahrus.xyz/games" class="mainlink">Games</a>
+              <a href="https://elijahrus.xyz/projects">Projects</a>
+              <a href="https://elijahrus.xyz/connect">Connect</a>
+              <a href="https://elijahrus.xyz/credits">Credits</a>
+          </div>
+      </div>
+
+
+</head>
+<body>
+
+
+
+<canvas width="750" height="585" id="game"></canvas>
+<script>
+const canvas = document.getElementById('game');
+const context = canvas.getContext('2d');
+const grid = 15;
+const paddleHeight = grid * 5; // 80
+const maxPaddleY = canvas.height - grid - paddleHeight;
+
+var paddleSpeed = 6;
+var ballSpeed = 5;
+
+const leftPaddle = {
+  // start in the middle of the game on the left side
+  x: grid * 2,
+  y: canvas.height / 2 - paddleHeight / 2,
+  width: grid,
+  height: paddleHeight,
+
+  // paddle velocity
+  dy: 0
+};
+const rightPaddle = {
+  // start in the middle of the game on the right side
+  x: canvas.width - grid * 3,
+  y: canvas.height / 2 - paddleHeight / 2,
+  width: grid,
+  height: paddleHeight,
+
+  // paddle velocity
+  dy: 0
+};
+const ball = {
+  // start in the middle of the game
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  width: grid,
+  height: grid,
+
+  // keep track of when need to reset the ball position
+  resetting: false,
+
+  // ball velocity (start going to the top-right corner)
+  dx: ballSpeed,
+  dy: -ballSpeed
+};
+
+// check for collision between two objects using axis-aligned bounding box (AABB)
+// @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+function collides(obj1, obj2) {
+  return obj1.x < obj2.x + obj2.width &&
+         obj1.x + obj1.width > obj2.x &&
+         obj1.y < obj2.y + obj2.height &&
+         obj1.y + obj1.height > obj2.y;
+}
+
+// game loop
+function loop() {
+  requestAnimationFrame(loop);
+  context.clearRect(0,0,canvas.width,canvas.height);
+
+  // move paddles by their velocity
+  leftPaddle.y += leftPaddle.dy;
+  rightPaddle.y += rightPaddle.dy;
+
+  // prevent paddles from going through walls
+  if (leftPaddle.y < grid) {
+    leftPaddle.y = grid;
+  }
+  else if (leftPaddle.y > maxPaddleY) {
+    leftPaddle.y = maxPaddleY;
+  }
+
+  if (rightPaddle.y < grid) {
+    rightPaddle.y = grid;
+  }
+  else if (rightPaddle.y > maxPaddleY) {
+    rightPaddle.y = maxPaddleY;
+  }
+
+  // draw paddles
+  context.fillStyle = 'black';
+  context.fillRect(leftPaddle.x, leftPaddle.y, leftPaddle.width, leftPaddle.height);
+  context.fillRect(rightPaddle.x, rightPaddle.y, rightPaddle.width, rightPaddle.height);
+
+  // move ball by its velocity
+  ball.x += ball.dx;
+  ball.y += ball.dy;
+
+  // prevent ball from going through walls by changing its velocity
+  if (ball.y < grid) {
+    ball.y = grid;
+    ball.dy *= -1;
+  }
+  else if (ball.y + grid > canvas.height - grid) {
+    ball.y = canvas.height - grid * 2;
+    ball.dy *= -1;
+  }
+
+  // reset ball if it goes past paddle (but only if we haven't already done so)
+  if ( (ball.x < 0 || ball.x > canvas.width) && !ball.resetting) {
+    ball.resetting = true;
+
+    // give some time for the player to recover before launching the ball again
+    setTimeout(() => {
+      ball.resetting = false;
+      ball.x = canvas.width / 2;
+      ball.y = canvas.height / 2;
+    }, 400);
+  }
+
+  // check to see if ball collides with paddle. if they do change x velocity
+  if (collides(ball, leftPaddle)) {
+    ball.dx *= -1;
+
+    // move ball next to the paddle otherwise the collision will happen again
+    // in the next frame
+    ball.x = leftPaddle.x + leftPaddle.width;
+  }
+  else if (collides(ball, rightPaddle)) {
+    ball.dx *= -1;
+
+    // move ball next to the paddle otherwise the collision will happen again
+    // in the next frame
+    ball.x = rightPaddle.x - ball.width;
+  }
+
+  // draw ball
+  context.fillRect(ball.x, ball.y, ball.width, ball.height);
+
+  // draw walls
+  context.fillStyle = 'black';
+  context.fillRect(0, 0, canvas.width, grid);
+  context.fillRect(0, canvas.height - grid, canvas.width, canvas.height);
+
+  // draw dotted line down the middle
+  for (let i = grid; i < canvas.height - grid; i += grid * 2) {
+    context.fillRect(canvas.width / 2 - grid / 2, i, grid, grid);
+  }
+}
+
+// listen to keyboard events to move the paddles
+document.addEventListener('keydown', function(e) {
+
+  // up arrow key
+  if (e.which === 38) {
+    rightPaddle.dy = -paddleSpeed;
+  }
+  // down arrow key
+  else if (e.which === 40) {
+    rightPaddle.dy = paddleSpeed;
+  }
+
+  // w key
+  if (e.which === 87) {
+    leftPaddle.dy = -paddleSpeed;
+  }
+  // a key
+  else if (e.which === 83) {
+    leftPaddle.dy = paddleSpeed;
+  }
+});
+
+// listen to keyboard events to stop the paddle if key is released
+document.addEventListener('keyup', function(e) {
+  if (e.which === 38 || e.which === 40) {
+    rightPaddle.dy = 0;
+  }
+
+  if (e.which === 83 || e.which === 87) {
+    leftPaddle.dy = 0;
+  }
+});
+
+// start the game
+requestAnimationFrame(loop);
+</script>
+<div class="footer">
+  <h2>ElijahRus</h2>
+  <div class="footerlinks">
+      <a href="https://elijahrus.xyz/" class="mainlink">Home</a>
+      <a href="https://elijahrus.xyz/games">Games</a>
+      <a href="https://elijahrus.xyz/projects">Projects</a>
+      <a href="https://elijahrus.xyz/connect">Connect</a>
+      <a href="https://elijahrus.xyz/credits">Credits</a>
+  </div>
+</div>
+</div>
+
+</body>
+</html>
