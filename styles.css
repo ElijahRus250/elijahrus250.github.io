@@ -449,84 +449,33 @@ li p{
 }
 
 
+ul {
+    display: flex;
+  }
 
+  li {
+    list-style-type: none;
+    padding: 10px;
+    position: relative;
+  }
 
-
-
-
-
-
+li:hover .large {
+  left: 20px;
+  top: -150px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.large-image {
+    border-radius: 4px;
+     box-shadow: 1px 1px 3px 3px rgba(127, 127, 127, 0.15);;
+  }
+
+.button-small-ee {
+    width: 2px;
+    height: 2px;
+    padding: 0px;
+    box-sizing: border-box;
+    border: 0;
+    background: red;
+  }
+
+}
