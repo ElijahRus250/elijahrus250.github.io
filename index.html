@@ -36,7 +36,9 @@
           padding: 20px;
           background-color: #f44336;
           color: white;
+          isolation: isolate;
         }
+        
         
         .closebtn {
           margin-left: 15px;
@@ -75,10 +77,12 @@
 
         <!-- LANDING PAGE -->
         <br><br><br><br>
-        <div class="alert">
+        
+        <div class="alert" >
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
             <strong>Alert!</strong> I am currently doing a giveaway as celebration for the new site! Join the discord: discord.gg/mMFv3jYtsq
           </div>
+          
           
         <div class="landing">
             
@@ -389,31 +393,6 @@
       resetPosition = true;
     }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
-  <script>
-    function addDarkmodeWidget() {
-      new Darkmode().showWidget();
-    }
-    window.addEventListener('load', addDarkmodeWidget);
-  </script>
-
-  <script>
-  const options = {
-    bottom: '64px', // default: '32px'
-    right: 'unset', // default: '32px'
-    left: '32px', // default: 'unset'
-    time: '0.5s', // default: '0.3s'
-    mixColor: '#fff', // default: '#fff'
-    backgroundColor: '#ffffff',  // default: '#fff'
-    buttonColorDark: '#100f2c',  // default: '#100f2c'
-    buttonColorLight: '#fff', // default: '#fff'
-    saveInCookies: false, // default: true,
-    label: '🌓', // default: ''
-    autoMatchOsTheme: true // default: true
-  }
-  
-  const darkmode = new Darkmode(options);
-  darkmode.showWidget();</script>
 
 
 </body>

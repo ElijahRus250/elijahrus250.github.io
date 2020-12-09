@@ -59,7 +59,16 @@ html,body{
 .landingText h1{
     font-size: 6vw;
     margin: 0 !important;
+    
 }
+
+.landingText h1 .darkmode--activated p, .darkmode--activated li {
+    font-size: 6vw;
+    margin: 0 !important;
+    color: #ffffff;
+    
+}
+
 
 .landingText h3{
     margin: 6px !important;
@@ -75,6 +84,7 @@ html,body{
     background-color: #2f8be0;
     border-radius: 45px;
     text-align: center
+
 }
 
 .landingText .btn a{
@@ -138,6 +148,7 @@ li p{
     line-height: 30px;
     opacity: 0.6;
 }
+
 
 li span{
     position: absolute;
