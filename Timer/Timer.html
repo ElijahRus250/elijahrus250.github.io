@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Countdown Timer</title>
+  <meta name="description" content="Check when your Giveaway will end on this page.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" media="screen" href="css/style.css">
+  <meta property="og:image" content="clock_icon.png">
+  <link rel="icon" href="clock_icon.png" type="image/x-icon">
+
+
+</head>
+
+<body onload="myTimezone()">
+
+  <script>
+    function GetURLParameter(sParam) {
+      var sPageURL = window.location.search.substring(1);
+      var sURLVariables = sPageURL.split('&');
+      return sURLVariables
+    }
+    function myTimezone() {
+      var time = parseInt(GetURLParameter(), 10);
+
+      //var time = Date.parse(GetURLParameter(), 10)
+      if (isNaN(time)){
+        setTimeout(function(){ return document.getElementById("ban").innerHTML = "Invalid Time";
+      }, 3000);
+      
+         
+      }
+    
+      var theDate = new Date(time);
+
+      document.getElementById("convert")
+        .innerHTML = "Local time: "
+        + theDate.toLocaleString();
+    } 
+
+
+  </script>
+
+<script>
+  var countDownDate = new Date(parseInt(GetURLParameter(), 10)).getTime();
+
+
+  var x = setInterval(function () {
+    var now = new Date().getTime();
+    var distance = countDownDate - now;
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+
+    document.getElementById("ban").innerHTML = days + "d " + hours + "h "
+
+      + minutes + "m " + seconds + "s ";
+    
+
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("ban").innerHTML = "Giveaway Ended!";
+    }
+  }, 1000);
+
+  
+</script>
+
+
+<!-- ParticlesJS -->
+<div id="particles-js">
+
+  <div id="centerbox">
+    <div id="titletext">Giveaway Ending in:</div>
+    <br>
+    <p id="ban" style="text-align: center; font-size: xx-large; color: azure; font-family: 'B612', sans-serif, serif; "></p>
+
+    <br>
+    <p id="convert" style="text-align: center; font-size: medium; color: azure; font-family: 'B612', sans-serif, serif; "></p>
+
+  </div>
+</div>
+
+<script src="js/particles.min.js"></script>
+<script src="js/app.js"></script>
+
+
+</body>
+</html>
